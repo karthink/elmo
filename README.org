@@ -1,0 +1,53 @@
+#+TITLE: Elmo - Embark Live MOde for Emacs
+#+AUTHOR: Karthik Chikmagalur
+#+DATE: 
+#+OPTIONS: h:3 num:nil toc:nil
+
+This is a collection of opinionated customizations to use [[https://github.com/oantolin/embark][Embark]] live buffers as my incremental completion and selection system. This has been kicking around my config for an year but I was inspired to package it by the similar [[https://gitlab.com/protesilaos/mct][MCT]] (Minibuffer and Completions in Tandem) feature.
+
+** Great, one more of these. What's wrong with Vertico/Ivy/Selectrum/Icomplete?
+Nothing, they're great. I prefer the free-form interaction of a regular buffer to the tightly prescribed form in the minibuffer. That way I can use all my regular Emacs muscle memory and jump/edit commands to interact with completion candidates (Isearch, Avy, easy-kill, expand-region, register and rectangle commands etc), and avoid context switching.
+
+*** Why not use the standard Completions buffer then?
+I might switch after Emacs 28 is released, the default Completions buffer is getting some upgrades.
+ 
+** What is Elmo good at?
+It does the usual stuff you expect from an incremental completion system for Emacs. Here are some differences:
+
+- No completion list until you type a minimum number of chars. I prefer this noise-free approach for most quick actions.
+  
+- Use all your regular buffer commands. Here I use a rectangle command:
+  
+- Switch on-the-fly between a list and grid display of candidates:
+  
+- Run embark actions on candidates directly with =embark-collect-direct-action-minor-mode=
+
+** What is it bad at?
+- It can be slow with large numbers of completions, especially with annotations turned on.
+- It does not show candidate groups (such as with Consult commands).
+
+** How do I use it?
+Run =elmo-mode=. 
+
+Needless to say Embark needs to be available as a feature. Works well with Consult. Consider installing Marginalia too.
+
+The completions are in a *regular* (actually embark-collect) read-only buffer, so you can navigate as usual:
+- ~C-n~, ~C-p~ (or just ~n~, ~p~, ~f~, ~b~) to cycle through candidates,
+- ~C-v~, ~M-v~ to scroll up/down (including from the minibuffer),
+- ~M-q~ to toggle between a list and grid
+- ~C-s~ to isearch, as well as any other regular command you use.
+- ~C-l~ to toggle the completions,
+- ~C-M-l~ to export them with Embark.
+
+The return key works like Ido: ~RET~ will pick the top completion or "enter" directories. Use ~C-j~ to use the actual minibuffer input.
+
+Tweak as necessary:
+- =elmo-min-input=: How many characters to type before popping up the completions. (Default is 3.)
+- =elmo-always-show-list=: List of commands for which the Embark live completions should pop up immediately.
+- =elmo-initial-delay=: How long (in secs) to wait before popping up the completions, after the minimum input condition is met. Picks up defaults from your Embark settings, you don't need to set this.
+- =elmo-update-delay=: How long (in secs) after each keystroke before updating the candidate list. Picks up defaults from your Embark settings, you don't need to set this.
+  
+** Acknowledgments
+- [[https://github.com/oantolin/][Omar Antolin]] for Embark, which does all the work
+- [[https://protesilaos.com/][Protesilaos Stavrou]] for mct.el
+- [[https://github.com/minad][Daniel Mendler]] for Vertico and vertico-directory
