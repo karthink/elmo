@@ -5,7 +5,7 @@
 
 [[https://user-images.githubusercontent.com/8607532/138616783-9748af72-c839-42f6-8d12-a48d653b5c05.png]]
 
-This is a collection of opinionated customizations to use [[https://github.com/oantolin/embark][Embark]] live buffers as my incremental completion and selection system. This has been kicking around my config for an year but I was inspired to package it by the similar [[https://gitlab.com/protesilaos/mct][MCT]] (Minibuffer and Completions in Tandem) feature.
+This is a collection of opinionated customizations to use [[https://github.com/oantolin/embark][Embark]] live buffers as my incremental completion and selection system. This has been kicking around in my config for an year but I was inspired to package it by the similar [[https://gitlab.com/protesilaos/mct][MCT]] (Minibuffer and Completions in Tandem) feature.
 
 ** Great, another one of these. What's wrong with Vertico/Ivy/Selectrum/Icomplete?
 Nothing, they're great. I prefer the free-form interaction of a regular buffer to the tightly prescribed form in the minibuffer. That way I can use all my regular Emacs muscle memory and jump/edit commands to interact with completion candidates (Isearch, Avy, easy-kill, expand-region, register and rectangle commands etc), and avoid context switching.

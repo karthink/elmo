@@ -7,7 +7,8 @@
 
 (defcustom elmo-always-show-list
   '(embark-prefix-help-command
-    embark-completing-read-prompter)
+    embark-completing-read-prompter
+    embark-act)
   "List of commands for which the Embark live completions should
   always pop up immediately."
   :group 'elmo
@@ -35,12 +36,14 @@ It can still be manually shown.")
   :group 'elmo
   :type 'integer)
 
-(defcustom elmo-max-height 14
+(defcustom elmo-max-height
+  (lambda () (* 3 (floor (frame-height) 8)))
   "Specify the max height of the embark-collect window.
 
-Also see `elmo-resize'."
+This can be an integer or a function of no arguments that returns
+a number. Also see `elmo-resize'."
   :group 'elmo
-  :type 'integer)
+  :type '(choice integer function))
 
 (defcustom elmo-resize t
   "Should the embark-collect-live buffer be resized
@@ -134,11 +137,14 @@ minibuffer."
       (minibuffer-force-complete-and-exit))))
 
 (defun elmo--height (win)
-  (if elmo-resize
-      (fit-window-to-buffer
-       win
-       elmo-max-height)
-    elmo-max-height))
+  (let ((height (if (functionp elmo-max-height)
+                    (funcall elmo-max-height)
+                  elmo-max-height)))
+    (if elmo-resize
+        (fit-window-to-buffer
+         win
+         height)
+      height)))
 
 (defun elmo-keyboard-quit ()
   "If in an Embark live collect/completions buffer, run
@@ -169,8 +175,7 @@ To be added to `embark-collect-post-revert-hook'."
   (when (and (derived-mode-p 'embark-collect-mode)
              (eq embark-collect--kind :completions))
     (if elmo-resize
-        (fit-window-to-buffer (get-buffer-window)
-                              elmo-max-height 1))))
+        (elmo--height (get-buffer-window)))))
 
 (defun elmo--live-buffer-p ()
   "Determine presence of a linked live occur buffer."
