@@ -339,8 +339,11 @@ highlighting."
     (define-key map (kbd "M-q")     #'embark-collect-toggle-view)
     (define-key map (kbd "C-c C-f") #'consult-preview-at-point-mode)
     (define-key map (kbd "M-i")     #'elmo-insert)
-    (define-key map (kbd "C-v")     #'minibuffer-scroll-other-window)
-    (define-key map (kbd "M-v")     #'minibuffer-scroll-other-window-down)
+    (define-key map (kbd "<tab>")   #'elmo-insert)
+    (define-key map (kbd "C-M-v")   #'minibuffer-scroll-other-window)
+    (define-key map (kbd "C-M-S-v") #'minibuffer-scroll-other-window-down)
+    (define-key map (kbd "C-v")     #'scroll-other-window)
+    (define-key map (kbd "M-v")     #'scroll-other-window-down)
     map))
 
 (defvar elmo-live-collect-map
