@@ -321,16 +321,18 @@ highlighting."
   (let ((embark-collect-live-update-delay elmo-update-delay))
     (funcall orig-fn _)))
 
+;; (lambda () (interactive)
+;;   (if minibuffer--require-match
+;;       (minibuffer-complete-and-exit)
+;;     (exit-minibuffer)))
+
 (defvar elmo-minibuffer-local-completion-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-n")     #'elmo-switch-to-completions-top)
     (define-key map (kbd "C-p")     #'elmo-switch-to-completions-bottom)
     (define-key map (kbd "C-l")     #'elmo-completions-toggle)
     (define-key map (kbd "RET")     #'elmo-directory-enter)
-    (define-key map (kbd "C-j")  (lambda () (interactive)
-	        	           (if minibuffer--require-match
-	        	               (minibuffer-complete-and-exit)
-	        	             (exit-minibuffer))))
+    (define-key map (kbd "C-j")     #'exit-minibuffer)
     (define-key map (kbd "DEL")     #'elmo-directory-delete-char)
     (define-key map (kbd "M-DEL")   #'elmo-directory-delete-word)
     (define-key map (kbd "C-w")     #'elmo-directory-delete-word)
